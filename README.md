@@ -1,2 +1,3 @@
-# utilsPlus
-Blender Addon with a bunch of handy  basic utilities
+# Utils Plus
+
+This add-on is a collection of basic functional utilities to improve the Blender workflow.

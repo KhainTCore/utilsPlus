@@ -1,0 +1,18 @@
+schema_version = "1.0.0"
+
+id = "utils_plus_extension"
+version = "0.0.5"
+name = "Utils Plus"
+tagline = "A collection of utility functions to help improve the blender UX"
+maintainer = "Khain L."
+type = "add-on"
+website = "https://github.com/KhainTCore/utilsPlus"
+# # Optional: tag list defined by Blender and server, see:
+# # https://docs.blender.org/manual/en/dev/advanced/extensions/tags.html
+tags = ["User Interface", "3D View", "Add Mesh"]
+blender_version_min = "4.5.0"
+# License conforming to https://spdx.org/licenses/ (use "SPDX: prefix)
+# https://docs.blender.org/manual/en/dev/advanced/extensions/licenses.html
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
