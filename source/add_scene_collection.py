@@ -17,6 +17,11 @@ class MakeSceneCollection(bpy.types.Operator):
         description = "Enter Collection Name Here",
         default = "Collection"
     )
+    includeControl: bpy.props.BoolProperty(
+        name="Include Control Collection",
+        description="Include a child collection called Control",
+        default=True
+    )
     bl_property = "collectionName" # Focus on this element
 
     def execute(self, context):
@@ -29,6 +34,10 @@ class MakeSceneCollection(bpy.types.Operator):
         #end if
 
         bpy.context.scene.collection.children.link(new_collection)
+        if self.includeControl:
+            control_collection = bpy.data.collections.new("Control")
+            new_collection.children.link(control_collection)
+        #end if
         return {'FINISHED'}
     #end execute
 
@@ -44,4 +53,11 @@ class MakeSceneCollection(bpy.types.Operator):
 
         return {'CANCELLED'}
     #end invoke
+
+    def draw(self, context):
+        layout = self.layout
+        if (layout is None):
+            return
+        layout.prop(self, "collectionName")
+        layout.prop(self, "includeControl")
 #end class
