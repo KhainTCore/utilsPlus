@@ -23,8 +23,10 @@ class AddClayVert(bpy.types.Operator):
     def single_vert_add(self):
         try: # Attempt to use single-vert add-on operator
             bpy.ops.mesh.primitive_vert_add() # pyright: ignore[reportAttributeAccessIssue]
+            bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT')
         except: # Fallback if the operator is not available
             bpy.ops.mesh.primitive_plane_add(enter_editmode=True)
+            bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT')
             bpy.ops.mesh.merge(type='CENTER')
         #end try
     #end single_vert_add
