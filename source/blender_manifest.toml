@@ -1,9 +1,9 @@
 schema_version = "1.0.0"
 
 id = "utils_plus_extension"
-version = "0.0.5"
+version = "0.0.7"
 name = "Utils Plus"
-tagline = "A collection of utility functions to help improve the blender UX"
+tagline = "Utility functions to improve work flows in Blender"
 maintainer = "Khain L."
 type = "add-on"
 website = "https://github.com/KhainTCore/utilsPlus"

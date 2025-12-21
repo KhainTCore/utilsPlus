@@ -1,6 +1,7 @@
 addon_keymaps = []
 
 import bpy # pyright: ignore[reportMissingImports]
+from .auto_highlight_listener import *
 from .add_scene_collection import *
 from .add_camera_rig import *
 from .add_clay_ball import *
@@ -13,6 +14,9 @@ classes = [
     AddClayVert,
     AddClayBall,
     AddClayBallMirrored,
+    # AutoHighlightListener,
+    BackupDuplicate,
+    QuickOriginToActive,
     VIEW3D_MT_mesh_clay_ball_add
 ]
 
@@ -51,6 +55,7 @@ def unregister():
         bpy.utils.unregister_class(el)
         print(f"Unregistered: {el.bl_label}")
     #end for
+    # bpy.utils.unregister_class(AutoHighlightListener)
     bpy.types.VIEW3D_MT_mesh_add.remove(clay_ball_menu_func)
 #end unregister
 
