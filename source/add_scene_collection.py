@@ -16,12 +16,12 @@ class MakeSceneCollection(bpy.types.Operator):
         name = "Collection Name",
         description = "Enter Collection Name Here",
         default = "Collection"
-    )
+    ) # pyright: ignore[reportInvalidTypeForm]
     includeControl: bpy.props.BoolProperty(
         name="Include Control Collection",
         description="Include a child collection called Control",
         default=True
-    )
+    ) # pyright: ignore[reportInvalidTypeForm]
     bl_property = "collectionName" # Focus on this element
 
     def execute(self, context):
@@ -36,6 +36,7 @@ class MakeSceneCollection(bpy.types.Operator):
         bpy.context.scene.collection.children.link(new_collection)
         if self.includeControl:
             control_collection = bpy.data.collections.new("Control")
+            control_collection.hide_render = True
             new_collection.children.link(control_collection)
         #end if
         return {'FINISHED'}
