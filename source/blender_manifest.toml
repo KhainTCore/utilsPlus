@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id = "utils_plus_extension"
-version = "0.0.7"
+version = "0.0.8"
 name = "Utils Plus"
 tagline = "Utility functions to improve work flows in Blender"
 maintainer = "Khain L."

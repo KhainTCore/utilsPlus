@@ -1,6 +1,8 @@
 addon_keymaps = []
 
-import bpy # pyright: ignore[reportMissingImports]
+import bpy
+
+from .hide_and_show_objects import *
 from .auto_highlight_listener import *
 from .add_scene_collection import *
 from .add_camera_rig import *
@@ -17,6 +19,8 @@ classes = [
     # AutoHighlightListener,
     BackupDuplicate,
     QuickOriginToActive,
+    ToggleRenderByValue,
+    ToggleViewportByValue,
     VIEW3D_MT_mesh_clay_ball_add
 ]
 
