@@ -9,7 +9,7 @@ def main():
     commands = [
         "echo 'Starting build process...' &&",
         "cd source &&",
-        "blender --command extension build --output-dir C:\\Users\\takih\\Blender\\Add-Ons &&",
+        "blender.exe --command extension build --output-dir C:\\Users\\takih\\Blender\\Add-Ons &&",
         "echo 'Build process completed.'"
     ]
     commands = " ".join(commands)
