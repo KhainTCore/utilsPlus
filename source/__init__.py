@@ -8,6 +8,7 @@ from .add_scene_collection import *
 from .add_camera_rig import *
 from .add_clay_ball import *
 from .misc import *
+from .rotate_menu import *
 
 # Register
 classes = [
@@ -21,7 +22,10 @@ classes = [
     QuickOriginToActive,
     ToggleRenderByValue,
     ToggleViewportByValue,
-    VIEW3D_MT_mesh_clay_ball_add
+    VIEW3D_MT_mesh_clay_ball_add,
+    RotateOnAxisByDegrees,
+    RotateOnAxisByDegreesEditMode,
+    VIEW3D_MT_mesh_axis_rotation
 ]
 
 def setKeybinding():
@@ -61,6 +65,14 @@ def unregister():
     #end for
     # bpy.utils.unregister_class(AutoHighlightListener)
     bpy.types.VIEW3D_MT_mesh_add.remove(clay_ball_menu_func)
+    try:
+        bpy.types.VIEW3D_MT_object_context_menu.remove(object_context_axis_rotation)
+    except Exception:
+        pass
+    try:
+        bpy.types.VIEW3D_MT_edit_mesh_context_menu.remove(object_context_axis_rotation)
+    except Exception:
+        pass
 #end unregister
 
 def register():
@@ -71,6 +83,9 @@ def register():
     setKeybinding()
     bpy.types.VIEW3D_MT_mesh_add.append(clay_ball_menu_func)
     bpy.types.VIEW3D_MT_camera_add.append(camera_menu_func)
+    # Append the Axis Rotation submenu to both object and edit-mesh context menus
+    bpy.types.VIEW3D_MT_object_context_menu.append(object_context_axis_rotation)
+    bpy.types.VIEW3D_MT_edit_mesh_context_menu.append(object_context_axis_rotation)
 #end register
 
 if __name__ == "__main__":
