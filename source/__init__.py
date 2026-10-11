@@ -9,6 +9,7 @@ from .add_camera_rig import *
 from .add_clay_ball import *
 from .misc import *
 from .rotate_menu import *
+from .workspaceManager import *
 
 # Register
 classes = [
@@ -25,7 +26,10 @@ classes = [
     VIEW3D_MT_mesh_clay_ball_add,
     RotateOnAxisByDegrees,
     RotateOnAxisByDegreesEditMode,
-    VIEW3D_MT_mesh_axis_rotation
+    VIEW3D_MT_mesh_axis_rotation,
+    NavigateWorkspace,
+    WorkspaceOverflowMenu,
+    Workspace_navigator,
 ]
 
 def setKeybinding():
@@ -36,6 +40,12 @@ def setKeybinding():
     kc = wm.keyconfigs.addon
     km = wm.keyconfigs.addon.keymaps.new(name='Outliner', space_type='OUTLINER') # Or other relevant space_type
     kmi = km.keymap_items.new(MakeSceneCollection.bl_idname, 'N', 'PRESS', ctrl=True) # Example: Ctrl+N
+    addon_keymaps.append((km, kmi))
+
+    km = kc.keymaps.new(name='Window', space_type='EMPTY')
+    kmi = km.keymap_items.new('wm.call_menu_pie', 'W', 'PRESS', shift=True)
+    if kmi.properties is not None:
+        kmi.properties.name = Workspace_navigator.bl_idname
     addon_keymaps.append((km, kmi))
 #end setKeybinding
 
@@ -67,9 +77,6 @@ def unregister():
     bpy.types.VIEW3D_MT_mesh_add.remove(clay_ball_menu_func)
     try:
         bpy.types.VIEW3D_MT_object_context_menu.remove(object_context_axis_rotation)
-    except Exception:
-        pass
-    try:
         bpy.types.VIEW3D_MT_edit_mesh_context_menu.remove(object_context_axis_rotation)
     except Exception:
         pass
