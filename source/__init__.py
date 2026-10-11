@@ -18,7 +18,6 @@ classes = [
     AddClayVert,
     AddClayBall,
     AddClayBallMirrored,
-    # AutoHighlightListener,
     BackupDuplicate,
     QuickOriginToActive,
     ToggleRenderByValue,
@@ -62,6 +61,8 @@ def camera_menu_func(self, context):
 #end camera_menu_func
 
 def unregister():
+    stop_auto_highlight_listener()
+
     # Remove the custom keymaps
     wm = bpy.context.window_manager
     for km, kmi in addon_keymaps:
@@ -87,6 +88,7 @@ def register():
         bpy.utils.register_class(el)
     #end for
 
+    start_auto_highlight_listener()
     setKeybinding()
     bpy.types.VIEW3D_MT_mesh_add.append(clay_ball_menu_func)
     bpy.types.VIEW3D_MT_camera_add.append(camera_menu_func)
