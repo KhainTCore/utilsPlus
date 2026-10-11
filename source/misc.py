@@ -84,33 +84,57 @@ class QuickOriginToActive(bpy.types.Operator):
 class BackupDuplicate(bpy.types.Operator):
     bl_idname = "util.backup_duplicate"
     bl_label = "Backup Duplicate"
-    bl_description = "Duplicate the selected object and create a backup"
+    bl_description = "Duplicate the active object into its collection's backup folder"
 
     def execute(self, context):
-        if bpy.context.scene is None or bpy.context.collection is None or bpy.context.mode != 'OBJECT':
+        if context.mode != 'OBJECT' or context.view_layer is None:
             return {'CANCELLED'}
         #end if
 
-        backupCollectionName = bpy.context.collection.name + " " + "Backups"
-        if backupCollectionName not in bpy.context.scene.collection.children:
-            new_collection = bpy.data.collections.new(backupCollectionName)
-            new_collection.hide_render = True
-            new_collection.hide_viewport = True
-            new_collection.hide_select = True
-            bpy.context.scene.collection.children.link(new_collection)
+        original = context.view_layer.objects.active
+        if original is None:
+            self.report({'WARNING'}, "No active object to duplicate.")
+            return {'CANCELLED'}
         #end if
 
-        backup_collection = bpy.data.collections.get(backupCollectionName)
-        for obj in bpy.context.selected_objects:
-            obj_copy = obj.copy()
-            if obj.data is not None:
-                obj_copy.data = obj.data.copy()
-                obj_copy.name = obj.name + "_backup"
-            #end if
-            if backup_collection is not None:
-                backup_collection.objects.link(obj_copy)
-            #end if
-        #end for
+        original_collections = list(original.users_collection)
+        if not original_collections:
+            self.report({'WARNING'}, "The active object is not linked to a collection.")
+            return {'CANCELLED'}
+
+        original_collection = context.collection
+        if original_collection not in original_collections:
+            original_collection = original_collections[0]
+
+        backup_collection = self.find_backup_collection(original_collection)
+        if backup_collection is None:
+            backup_collection = bpy.data.collections.new(f"{original_collection.name} Backups")
+            backup_collection.hide_render = True
+            backup_collection.hide_viewport = True
+            backup_collection.hide_select = True
+            original_collection.children.link(backup_collection)
+        #end if
+
+        duplicate = original.copy()
+        if original.data is not None:
+            duplicate.data = original.data.copy()
+        #end if
+        duplicate.name = f"{original.name}_backup"
+        backup_collection.objects.link(duplicate)
+        duplicate.select_set(False)
+        context.view_layer.objects.active = original
+
         return {'FINISHED'}
     #end execute
+
+    def find_backup_collection(self, parent):
+        for child in parent.children:
+            if "backup" in child.name.casefold():
+                return child
+            nested_backup = self.find_backup_collection(child)
+            if nested_backup is not None:
+                return nested_backup
+        #end for
+        return None
+    #end find_backup_collection
 #end class
