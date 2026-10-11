@@ -38,7 +38,7 @@ class NavigateWorkspace(bpy.types.Operator):
     Defines the "Workspace Navigator" menu in 3D Viewport Object Context Menu
 """
 class Workspace_navigator(bpy.types.Menu):
-    bl_idname = "util.workspace_navigator"
+    bl_idname = "UTIL_MT_workspace_navigator"
     bl_label = "Workspace Navigator"
 
     def draw(self, context):
