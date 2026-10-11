@@ -3,10 +3,11 @@ addon_keymaps = []
 import bpy
 
 from .hide_and_show_objects import *
-from .auto_highlight_listener import *
+from .active_camera_dialog import *
 from .add_scene_collection import *
 from .add_camera_rig import *
 from .add_clay_ball import *
+from .auto_highlight_listener import *
 from .misc import *
 from .rotate_menu import *
 from .workspaceManager import *
@@ -19,6 +20,7 @@ classes = [
     AddClayBall,
     AddClayBallMirrored,
     BackupDuplicate,
+    ActiveCameraList,
     QuickOriginToActive,
     ToggleRenderByValue,
     ToggleViewportByValue,
